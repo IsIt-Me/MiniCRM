@@ -1,0 +1,26 @@
+# Каталоги сборки CMake / Qt Creator / Visual Studio
+build/
+build-*/
+out/
+.vs/
+CMakeUserPresets.json
+
+# Пользовательские настройки Qt Creator
+*.user
+*.user.*
+*.autosave
+.qtcreator/
+
+# Артефакты сборки
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.so.*
+*.dylib
+*.pdb
+*.ilk
+
+# Логи
+*.log
