@@ -1,0 +1,63 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "server-debug",
+      "displayName": "Сервер (Debug)",
+      "description": "API-сервер и тесты, без клиента. Для Linux.",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "MINICRM_BUILD_CLIENT": "OFF"
+      }
+    },
+    {
+      "name": "server-release",
+      "displayName": "Сервер (Release)",
+      "description": "Оптимизированная сборка сервера для запуска в работу.",
+      "inherits": "server-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "client-debug",
+      "displayName": "Клиент (Debug)",
+      "description": "Настольный клиент и тесты, без сервера.",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "MINICRM_BUILD_SERVER": "OFF"
+      }
+    },
+    {
+      "name": "client-release",
+      "displayName": "Клиент (Release)",
+      "inherits": "client-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "server-debug",   "configurePreset": "server-debug" },
+    { "name": "server-release", "configurePreset": "server-release" },
+    { "name": "client-debug",   "configurePreset": "client-debug" },
+    { "name": "client-release", "configurePreset": "client-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "server-debug",
+      "configurePreset": "server-debug",
+      "output": { "outputOnFailure": true }
+    },
+    {
+      "name": "client-debug",
+      "configurePreset": "client-debug",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}
