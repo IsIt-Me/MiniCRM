@@ -71,3 +71,38 @@ MiniCRM/
 | Ctrl+D | удалить выбранного клиента |
 | Ctrl+Shift+Del | очистить базу |
 | Ctrl+Q | выход |
+
+
+## Как собрать
+
+Проект состоит из трёх частей: PostgreSQL и API-сервер работают на Linux,
+Qt-клиент — на Windows. Проверено на Astra Linux 1.8.1 и Windows 11.
+
+### 1. Требования
+
+**Сервер (Linux):** CMake 3.16+, Ninja, компилятор C++17, Qt 6.4+ с модулями
+Core, Network, Sql (драйвер QPSQL) и HttpServer, PostgreSQL 13+.
+
+**Клиент (Windows):** Qt 5.15 или Qt 6 с модулями Widgets и Network,
+Qt Creator, Ninja (`winget install Ninja-build.Ninja`).
+
+### 2. База данных
+
+```bash
+sudo apt install -y postgresql
+sudo systemctl enable --now postgresql
+sudo -u postgres psql -c "CREATE USER minicrm WITH PASSWORD 'minicrm';"
+sudo -u postgres psql -c "CREATE DATABASE minicrm OWNER minicrm;"
+psql -h localhost -U minicrm -d minicrm -f db/init.sql
+psql -h localhost -U minicrm -d minicrm -f db/seed.sql   # тестовые данные
+```
+
+### 3. Сервер
+
+```bash
+sudo apt install -y build-essential cmake ninja-build git \
+    qt6-base-dev qt6-base-private-dev libqt6sql6-psql
+```
+
+Если в репозитории дистрибутива нет пакета Qt HttpServer (например, в Astra Linux),
+соберите модуль из исходников
