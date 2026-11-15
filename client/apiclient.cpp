@@ -13,7 +13,7 @@
 namespace {
 
 // Адрес API-сервера пока зашит в код.
-const char kServerUrl[] = "http://192.168.50.135:8080";
+const char kServerUrl[] = "http://192.168.95.10:8080";
 
 void setError(QString *error, const QString &text)
 {
